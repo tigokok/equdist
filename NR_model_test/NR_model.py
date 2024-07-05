@@ -262,7 +262,7 @@ def inside_simulation(state, nstages, feedstage, pressure, feed, z, distillate, 
     
     state = condensor_duty(state)
     state = reboiler_duty(state)
-    state = costing.tac(state)
+    #state = costing.tac(state)
     #state = condensor_duty(state)
     #state = reboiler_duty(state)
 
