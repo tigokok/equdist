@@ -1,0 +1,35 @@
+absl-py @ file:///croot/absl-py_1714140470852/work
+chex==0.1.86
+contourpy @ file:///croot/contourpy_1700583582875/work
+cycler @ file:///tmp/build/80754af9/cycler_1637851556182/work
+dm-tree @ file:///croot/dm-tree_1671027432897/work
+fonttools @ file:///croot/fonttools_1713551344105/work
+importlib-metadata @ file:///croot/importlib_metadata-suite_1704813515092/work
+importlib-resources @ file:///croot/importlib_resources-suite_1704281845041/work
+jax==0.4.28
+jaxlib==0.4.28
+jaxopt==0.8.3
+kiwisolver @ file:///croot/kiwisolver_1672387140495/work
+matplotlib @ file:///croot/matplotlib-suite_1713336378214/work
+mkl-fft @ file:///croot/mkl_fft_1695058164594/work
+mkl-random @ file:///croot/mkl_random_1695059800811/work
+mkl-service==2.4.0
+ml-dtypes @ file:///croot/ml_dtypes_1702691022032/work
+numpy @ file:///croot/numpy_and_numpy_base_1708638617955/work/dist/numpy-1.26.4-cp39-cp39-linux_x86_64.whl#sha256=6094eeedd869502faa0fd0a8c5ad3a70c5779be06ddd1feb7627e5c212fac420
+opt-einsum @ file:///tmp/build/80754af9/opt_einsum_1621500238896/work
+packaging @ file:///croot/packaging_1720101850331/work
+pillow @ file:///croot/pillow_1714398848491/work
+ply==3.11
+pyparsing @ file:///opt/conda/conda-bld/pyparsing_1661452539315/work
+PyQt5==5.15.10
+PyQt5-sip @ file:///croot/pyqt-split_1698769088074/work/pyqt_sip
+python-dateutil @ file:///croot/python-dateutil_1716495738603/work
+scipy @ file:///croot/scipy_1717521478074/work/dist/scipy-1.13.1-cp39-cp39-linux_x86_64.whl#sha256=2cb3d1436f8762a53161486cb9493ccc305fc760e8f830f82888792cbaf99099
+sip @ file:///croot/sip_1698675935381/work
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+tomli @ file:///opt/conda/conda-bld/tomli_1657175507142/work
+toolz @ file:///croot/toolz_1667464077321/work
+tornado @ file:///croot/tornado_1718740109488/work
+typing_extensions==4.12.2
+unicodedata2 @ file:///croot/unicodedata2_1713212950228/work
+zipp @ file:///croot/zipp_1704206909481/work
