@@ -1,35 +1,28 @@
-import os
-from typing import List
-
 import setuptools
-from setuptools import setup
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
-setup(
-    name="EquDist",
-    version=0.0.1,
-    author="NiklasSlager",
+setuptools.setup(
+    name="JAX distillation",
+    version="0.0.1",
+    author="Niklas Slager",
     author_email="niklasslager@outlook.com",
-    description="Equilibrium separation model in JAX",
-    license="Apache 2.0",
-    url="https://github.com/NiklasSlager/EquDist/",
-    long_description=open("README.md").read(),
+    description="JAX implementation of Napthali-Sandholm",
+    long_description=long_description,
     long_description_content_type="text/markdown",
-    keywords="Chemical separation JAX",
-    packages=setuptools.find_packages(),
-    python_requires=">=3.8",
-    install_requires=["chex==0.1.86", "jax==0.4.28", "jaxlib==0.4.28", "jaxopt==0.8.3"]
-    package_data={"EquDist": ["py.typed"]},
-    classifiers=[  
-        "Intended Audience :: Science/Research",
-        "Intended Audience :: Developers",
+    url="https://github.com/NiklasSlager/EquDist",
+    packages=['NR_model_test'],
+    package_data={'NR_model_test': [
+        'Pure component parameters/Antoine.csv', 'Pure component parameters/Vapor_CP.csv',
+        'Pure component parameters/Heat_of_evaporization.csv', 'Pure component parameters/Heat_of_formation.csv', 
+    ]},
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Topic :: Scientific/Engineering :: Artificial Intelligence",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-        "License :: OSI Approved :: Apache Software License",
     ],
-    zip_safe=False,
-    include_package_data=True,
+    python_requires='>=3.6',
+    install_requires=["numpy==1.18.1","scipy == 1.10.0"]
 )
+install_requires=["chex==0.1.86", "jax==0.4.28", "jaxlib==0.4.28", "jaxopt==0.8.3"]
