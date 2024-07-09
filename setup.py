@@ -33,7 +33,7 @@ setup(
     long_description_content_type="text/markdown",
     keywords="Chemical separation JAX",
     packages=setuptools.find_packages(),
-    python_requires=">=3.9",
+    python_requires=">=3.8",
     install_requires=["chex==0.1.86", "jax==0.4.28", "jaxlib==0.4.28", "jaxopt==0.8.3"]
     package_data={"EquDist": ["py.typed"]},
     classifiers=[  
