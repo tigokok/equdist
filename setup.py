@@ -23,6 +23,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
-    install_requires=["numpy==1.18.1","scipy == 1.10.0"]
+    install_requires=["chex==0.1.86", "jax==0.4.28", "jaxlib==0.4.28", "jaxopt==0.8.3"]
 )
-install_requires=["chex==0.1.86", "jax==0.4.28", "jaxlib==0.4.28", "jaxopt==0.8.3"]
+
