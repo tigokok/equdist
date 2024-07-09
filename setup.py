@@ -5,25 +5,9 @@ import setuptools
 from setuptools import setup
 
 
-def _parse_requirements(path: str) -> List[str]:
-    """Returns content of given requirements file."""
-    with open(os.path.join(path)) as f:
-        return [
-            line.rstrip() for line in f if not (line.isspace() or line.startswith("#"))
-        ]
-
-
-def _get_version() -> str:
-    """Grabs the package version from EquDist/version.py."""
-    dict_ = {}
-    with open("EquDist/version.py") as f:
-        exec(f.read(), dict_)
-    return dict_["__version__"]
-
-
 setup(
     name="EquDist",
-    version=_get_version(),
+    version=0.0.1,
     author="NiklasSlager",
     author_email="niklasslager@outlook.com",
     description="Equilibrium separation model in JAX",
