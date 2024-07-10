@@ -109,39 +109,34 @@ def update_NR(state: State):
     dx = jnp.nan_to_num(functions.thomas(a, b, c, -1 * f, state.Nstages)) #.reshape(-1,1)
 
     def min_res(t, state: State, dx):
-        '''
-        hopper = len(state.components) * 2 + 1
-        dx_v = vmap(lambda j: dx[jnp.arange(len(state.components)) + j * hopper, 1])(
-            jnp.arange(len(state.temperature))).transpose()
-        dx_l = vmap(lambda j: dx[jnp.arange(len(state.components)) + (len(state.components) + 1) + j * hopper, 1])(
-            jnp.arange(len(state.temperature))).transpose()
-        dx_t = vmap(lambda j: dx[len(state.components) + j * hopper, 1])(
-            jnp.arange(len(state.temperature))).transpose()
-        '''
+
         dx_v = dx[:, :len(state.components)].transpose()
         dx_l = dx[:, -len(state.components):].transpose()
         dx_t = dx[:, len(state.components)].transpose()
-        '''
-        dx_v = dx[:, :len(state.components)].transpose()
-        dx_l = dx[:, -len(state.components):].transpose()
-        dx_t = dx[:, len(state.components)].transpose()
-        '''
+
         v_new = (state.trays.tray.v + t * dx_v)
         l_new = (state.trays.tray.l + t * dx_l)
         temp = (state.trays.tray.T + t * dx_t)
-        # temp = jnp.where(dx[:, len(state.components)].transpose() < 10., jnp.where(dx[:, len(state.components)].transpose() > -10., state.trays.tray.T + t * dx[:, len(state.components)].transpose(), state.trays.tray.T - 10.), state.trays.tray.T + 10.)
+
+        v_max = jnp.max(state.trays.tray.v)
+        l_max = jnp.max(state.trays.tray.l)
+        
         v_new_final = jnp.where(v_new > 0, v_new, state.trays.tray.v
                                 * jnp.exp(t * dx_v / jnp.where(state.trays.tray.v > 0, state.trays.tray.v, 1e30)))
         l_new_final = jnp.where(l_new > 0, l_new, state.trays.tray.l
                                 * jnp.exp(t * dx_l / jnp.where(state.trays.tray.l > 0, state.trays.tray.l, 1e30)))
-        temp_final = jnp.where(jnp.abs(dx_t) > 7, (state.trays.tray.T + 7 * (dx_t) / (jnp.abs(dx_t))),
+        temp_final = jnp.where(jnp.abs(dx_t) > 8, (state.trays.tray.T + 8 * (dx_t) / (jnp.abs(dx_t))),
                                (state.trays.tray.T + t * dx_t))
+
+        v_new_final = jnp.where((jnp.abs(dx_v) > 0.5 * v_max) & (v_new > 0), v_new + 0.5 * v_max*dx_v/jnp.abs(dx_v), v_new_final)
+        l_new_final = jnp.where((jnp.abs(dx_l) > 0.5 * l_max) & (l_new > 0), l_new + 0.5 * l_max * dx_l / jnp.abs(dx_l),  l_new_final)
+
         state = state.replace(
             V=jnp.sum(v_new_final, axis=0),
             L=jnp.sum(l_new_final, axis=0),
             Y=jnp.nan_to_num(v_new_final/jnp.sum(v_new_final, axis=0)),
             X=jnp.nan_to_num(l_new_final/jnp.sum(l_new_final, axis=0)),
-            temperature=temp,
+            temperature=temp_final,
         )
 
         state = matrix_transforms.trays_func(state)
@@ -240,15 +235,13 @@ def inside_simulation(state, nstages, feedstage, pressure, feed, z, distillate, 
     state = initial_temperature(state)
     
     state = state.replace(Hfeed=jnp.where(state.F > 0, jnp.sum(thermodynamics.feed_enthalpy(state)*state.z), 0))
-
-    #state = state.replace(X=(jnp.ones(len(state.temperature))[:, None]*state.z).transpose())
-    #state = functions.y_func(state)
-    
+    '''
     def for_body(state, i):
         return initial_composition.bubble_point(state), None
     
     state, _ = jax.lax.scan(for_body, state, jnp.arange(3))
-
+    '''
+    state = initial_composition.bubble_point(state)
     
     state, iterations, res = converge_column(state)
     state = state.replace(
