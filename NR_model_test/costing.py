@@ -5,8 +5,8 @@ def diameter(state: State, l_s):
     r_gas = 8.314
     mw_series = jnp.array([16.04, 30.07, 44.097, 58.12, 72.15, 72.15, 100.21, 114.23])
     rho_series = jnp.array([422.6, 544.0, 493.0, 625.0, 626.0, 616.0, 670.0, 690.0])
-    mw_series = jnp.array([58.12, 72.15, 114.23])
-    rho_series = jnp.array([625.0, 626.0, 690.0])
+    #mw_series = jnp.array([58.12, 72.15, 114.23])
+    #rho_series = jnp.array([625.0, 626.0, 690.0])
     rho_v = state.pressure * 1e5 / (r_gas * state.temperature)*jnp.sum(state.Y*mw_series[:, None], axis=0)/1000
     rho_l = jnp.sum(state.X*rho_series[:, None], axis=0)
     u_sup = (-0.171 * l_s**2 + 0.27 * l_s - 0.047)*((rho_l-rho_v)/rho_v)**0.5
