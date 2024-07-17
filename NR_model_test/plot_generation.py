@@ -1,28 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
-def Enthalpy_temperature(component):
-    T_array = np.linspace(273, 373)
-    H_Larray = np.zeros(len(T_array))
-    H_Varray = np.zeros(len(T_array))
-    for i in range(0, len(components)):
-        for j in range(0, len(T_array)):
-            H_Larray[j] = (Hform[i] + self.Cp_vap(i, T_array[j]) - self.H_evap(i, T_array[j])) / 4.184
-            H_Varray[j] = (Hform[i] + self.Cp_vap(i, T_array[j])) / 4.184
-
-        plt.plot(T_array - 273.15, H_Larray)
-        plt.plot(T_array - 273.15, H_Varray)
-    plt.xlabel('Temperature (C)')
-    plt.ylabel('Enthalpy (KJ/mole')
-    plt.title('Temperature dependency of enthalpy (C5)')
-    plt.grid(True)
-    # plt.xticks(np.arange(290, T_array[-1] + 273.15, 10))
-    # plt.yticks(np.arange(round(min(H_Larray)), round(max(H_Varray)) + 2, 1))
-
-    # Show the plot
-    plt.show()
-
-
 def plot_function(stages, L, V, temperature, H_liq, H_vap, xnorm, y, components):
     fig, axs = plt.subplots(2, 3, figsize=(12, 4))
 
@@ -62,8 +40,10 @@ def plot_function(stages, L, V, temperature, H_liq, H_vap, xnorm, y, components)
     axs[1, 1].grid(True)
     axs[1, 1].set_xticks(np.arange(1, len(stages)))
 
+    component_names = ['C1', 'C2', 'C3', 'C4', 'C5', 'I-C5', 'C6', 'C8']
     for xc in range(0, len(components)):
-        axs[1, 2].plot(stages, xnorm[xc, :], label=components[xc]) #, label=[key for key, value in components.items() if value == xc]
+        if any(xnorm[xc, :]) > 0:
+            axs[1, 2].plot(stages, xnorm[xc, :], label=component_names[xc]) #, label=[key for key, value in components.items() if value == xc]
 
     axs[1, 2].set_title('Composition')
     axs[1, 2].set_xlabel('Stages')
