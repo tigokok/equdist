@@ -93,6 +93,7 @@ class State:
     action_mask: chex.Array  # (4,)
     key: chex.PRNGKey  # (2,)
     residuals: chex.Array
+    analytics: bool
     #storage: chex.Array
     #res: chex.Array
     #profiler: chex.Array
