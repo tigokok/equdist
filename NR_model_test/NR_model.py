@@ -4,8 +4,8 @@ import jaxopt
 from jax import vmap, lax, jit, jacfwd
 from NR_model_test.distillation_types import State, NR_State, Trays, Tray, Thermo
 from NR_model_test import functions, initial_composition, matrix_transforms, jacobian, thermodynamics, costing, purity_constraint
-from NR_model_test.analytic_jacobian import jacobian as pure_jac
-from NR_model_test import analytic_jacobian
+#from NR_model_test.analytic_jacobian import jacobian as pure_jac
+#from NR_model_test import analytic_jacobian
 import os
 
 def initialize():
