@@ -10,18 +10,28 @@ def m_function(state, tray_low, tray, tray_high, i, j):
 
 
 def e_function(state: State, tray_low, tray, tray_high, i, j):
-    return thermo.k_eq(tray.T, state.components[i], state.pressure) * tray.l[i]/jnp.sum(tray.l) - tray.v[i]/jnp.sum(tray.v)
+    return ((tray.l[i]/jnp.sum(tray.l) * thermo.k_eq(tray.T, state.components[i], state.pressure) - tray.v[i]/jnp.sum(tray.v))) #*jnp.where(state.z > 0, 1, 0)[i]
 
 
 def h_function(state: State, tray_low, tray, tray_high, j):
+    h_evap = thermo.h_evap(tray.T, 4)
     h_vap = jnp.average(thermo.liquid_enthalpy(tray.T, state.components))
     #-(jnp.sum(tray.v) - jnp.sum(tray.l) / state.RR)
-    result = jnp.where(j == 0, -(jnp.sum(tray.v) - jnp.sum(tray.l) / state.RR), (
-        jnp.where(j == state.Nstages - 1, (jnp.sum(tray.l) - (jnp.sum(state.F) - state.distillate)), ((
+    cond_spec = jnp.where(state.light_key>0,
+                          (tray.v[state.light_key]-state.light_spec*jnp.sum(state.F)*state.z[state.light_key]),
+                          -(jnp.sum(tray.v) - jnp.sum(tray.l) / state.RR)
+                          )
+    reb_spec = jnp.where(state.heavy_key>0,
+                         (tray.l[state.heavy_key]-state.heavy_spec * jnp.sum(state.F)*state.z[state.heavy_key]),
+                         -(jnp.sum(tray.l) - (jnp.sum(state.F) - state.distillate))
+                         )
+
+    result = jnp.where(j == 0, cond_spec, (
+        jnp.where(j == state.Nstages - 1, reb_spec, (
                 jnp.sum(tray.l * thermo.liquid_enthalpy(tray.T, state.components)) + jnp.sum(
             tray.v * thermo.vapor_enthalpy(tray.T, state.components))
                 - jnp.sum(tray_high.l * thermo.liquid_enthalpy(tray_high.T, state.components)) - jnp.sum(
-            tray_low.v * thermo.vapor_enthalpy(tray_low.T, state.components))) - jnp.sum(state.F*state.Hfeed[j]))/h_vap)))
+            tray_low.v * thermo.vapor_enthalpy(tray_low.T, state.components)) - jnp.sum(state.F*state.Hfeed[j]))/(-h_vap))))
     return result
 
 
