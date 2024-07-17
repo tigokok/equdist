@@ -70,7 +70,7 @@ def initial_guess(state: State, nstages, feedstage, pressure, feed, z, distillat
     fug_state = purity_constraint.FUG_specs(z, heavy_recovery, light_recovery, pressure, feed)
     fug_state = fug_state._replace(stages=nstages)
     fug_state = purity_constraint.feedstage(fug_state)
-    feedstage = fug_state.feed_stage
+    feedstage = jnp.where(specs == True, fug_state.feed_stage, feedstage)
     rr = jnp.where(specs == True, fug_state.reflux, rr)
     distillate = jnp.where(specs == True, fug_state.distillate, distillate)
     l_init = jnp.where(jnp.arange(len(state.L)) < feedstage-1, rr*distillate, rr*distillate+jnp.sum(feed))
