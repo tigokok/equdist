@@ -53,26 +53,3 @@ def plot_function(stages, L, V, temperature, H_liq, H_vap, xnorm, y, components)
     axs[1, 2].legend()
     axs[1, 2].set_xticks(np.arange(1, len(stages)))
 
-    # Adjust layout
-    plt.tight_layout()
-    #plt.savefig(f'pictures/{iter}.png')
-    fig2 = plt.figure(2)
-    ax2 = fig2.add_subplot(111)
-    # calculate mole fractions
-    for i in range(0, len(components)):
-        ax2.plot(stages, temperature - 273.15, label=i)
-    ax2.set_ylabel('Liquid phase mole fraction')
-    ax2.set_xlabel('Stage Number')
-    ax2.legend()
-    ax2.grid()
-
-    fig3 = plt.figure(3)
-    ax3 = fig3.add_subplot(111)
-
-    for i in range(0, len(components)):
-        ax3.plot(stages, L, label='x_matrix')
-    #   ax3.plot(stages, xnormalized[i, :], label='Aspen', linestyle=':')
-    ax3.set_ylabel('Liquid phase mole fraction')
-    ax3.set_xlabel('Stage Number')
-    ax3.legend()
-    ax3.grid()
