@@ -4,8 +4,8 @@ import jaxopt
 from jax import vmap, lax, jit, jacfwd
 from NR_model_test.distillation_types import State, NR_State, Trays, Tray, Thermo
 from NR_model_test import functions, initial_composition, matrix_transforms, jacobian, thermodynamics, costing, purity_constraint
-from NR_model_test.analytic_jacobian.analytic jacobian import jacobian as pure_jac
-
+from NR_model_test.analytic_jacobian import jacobian as pure_jac
+from NR_model_test import analytic_jacobian
 import os
 
 def initialize():
@@ -58,17 +58,13 @@ def initialize():
         step_count=jnp.zeros((), dtype=int),  # ()
         action_mask=jnp.ones(7500, dtype=bool), # (4,)
         key=jax.random.PRNGKey(0),  # (2,)
-        residuals=jnp.zeros(100, dtype=float)
+        residuals=jnp.zeros(100, dtype=float),
+        analytics=jnp.zeros((), dtype=bool)
     )
 
-    '''thermo=Thermo(psat_params=psat_params, 
-                      hvap_params=hvap_params,
-                      hform_params=hform_params,
-                      cpvap_params=cpvap_params,
-                      ),'''
 
 
-def initial_guess(state: State, nstages, feedstage, pressure, feed, z, distillate, rr, specs: bool,
+def initial_guess(state: State, nstages, feedstage, pressure, feed, z, distillate, rr, analytics: bool, specs: bool,
                   heavy_recovery, light_recovery):
 
     fug_state = purity_constraint.FUG_specs(z, heavy_recovery, light_recovery, pressure, feed)
@@ -244,14 +240,14 @@ def reboiler_duty(state: State):
                           CD=state.CD+CD)
 
 
-def inside_simulation(state, nstages, feedstage, pressure, feed, z, distillate, rr, specs, heavy_recovery=jnp.array(0.99, dtype=float), light_recovery=jnp.array(0.99, dtype=float)):
+def inside_simulation(state, nstages, feedstage, pressure, feed, z, distillate, rr, analytics=False, specs=False, heavy_recovery=jnp.array(0.99, dtype=float), light_recovery=jnp.array(0.99, dtype=float)):
     iterations = 0
     res = 0
     #feedstage = jnp.floor((nstages + 1) / 2 )
     #state = initialize()
 
     state = initial_guess(state=state, nstages=nstages, feedstage=feedstage, pressure=pressure, feed=feed, z=z,
-                               distillate=distillate, rr=rr, specs=specs, heavy_recovery=heavy_recovery, light_recovery=light_recovery)
+                               distillate=distillate, rr=rr, analytics=analytics, specs=specs, heavy_recovery=heavy_recovery, light_recovery=light_recovery)
 
     state = initial_temperature(state)
     
@@ -282,12 +278,6 @@ def inside_simulation(state, nstages, feedstage, pressure, feed, z, distillate, 
     state = condensor_duty(state)
     state = reboiler_duty(state)
     state = costing.tac(state)
-    #state = condensor_duty(state)
-    #state = reboiler_duty(state)
-
-    #feed_stage = jnp.max(jnp.where(state.F > 0, jnp.arange(len(state.temperature)), 0))
-    #state, iteration = converge_bubble_point(state)
-
 
     return state, iterations, res
 
