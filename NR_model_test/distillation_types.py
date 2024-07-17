@@ -41,7 +41,26 @@ class Thermo(NamedTuple):
     hform_params: chex.Array
     cpvap_params: chex.Array
 
-    
+
+class FUG_state(NamedTuple):
+    components: chex.Array
+    z: chex.Array
+    pressure: chex.Array
+    heavy_key: chex.Array
+    light_key: chex.Array
+    heavy_x: chex.Array
+    light_x: chex.Array
+    heavy_spec: chex.Array
+    light_spec: chex.Array
+    alpha_avg: chex.Array
+    feed: chex.Array
+    stages: chex.Array
+    feed_stage: chex.Array
+    reflux: chex.Array
+    t_cond: chex.Array
+    t_reb: chex.Array
+    distillate: chex.Array
+
 @dataclass
 class State:
     L: chex.Array
@@ -65,10 +84,15 @@ class State:
     CD: chex.Array
     TAC: chex.Array
     trays: Trays
+    heavy_key: chex.Array
+    light_key: chex.Array
+    heavy_spec: chex.Array
+    light_spec: chex.Array
     #thermo: Thermo
     step_count: chex.Numeric  # ()
     action_mask: chex.Array  # (4,)
     key: chex.PRNGKey  # (2,)
+    residuals: chex.Array
     #storage: chex.Array
     #res: chex.Array
     #profiler: chex.Array
