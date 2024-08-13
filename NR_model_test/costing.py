@@ -1,6 +1,6 @@
 import jax.numpy as jnp
-from jumanji.environments.distillation.NR_model_test.distillation_types import State
-from jumanji.environments.distillation.NR_model_test.data_property import MW, DENSITY
+from NR_model_test.distillation_types import State
+from NR_model_test.data_property import MW, DENSITY
 
 def diameter(state: State, l_s):
     r_gas = 8.314
