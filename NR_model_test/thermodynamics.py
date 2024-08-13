@@ -1,10 +1,10 @@
 import jax.numpy as jnp
 from jaxopt import Bisection
 from jax import vmap
-from jumanji.environments.distillation.NR_model_test.distillation_types import State, Thermo
+from NR_model_test.distillation_types import State, Thermo
 import os
-from jumanji.environments.distillation.NR_model_test.physical_data_sets import psat_params, cpvap_params, hvap_params, hform_params
-from jumanji.environments.distillation.NR_model_test.data_property import DHV, HFORM, CPIG, PSAT
+from NR_model_test.physical_data_sets import psat_params, cpvap_params, hvap_params, hform_params
+from NR_model_test.data_property import DHV, HFORM, CPIG, PSAT
 
 
 def p_sat(temp, compound):
