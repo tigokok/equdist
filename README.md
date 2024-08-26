@@ -1,10 +1,6 @@
-Sure! Based on the information provided in the repository you mentioned, here's a structured README file for the GitHub repository `equdist`. 
-
----
-
 # equdist
 
-Welcome to the `equdist` repository! This project contains the code and resources necessary for implementing a Python-integrated JAX-written rigorous Newton-Raphson algorithm for equilibrium separation, with applications to distillation sequencing for purifying multi-component mixtures. This algorithm is integrated into a reinforcement learning (RL) framework to optimize process synthesis, specifically for distillation.
+Welcome to the `equdist` repository! This project contains the code and resources necessary for implementing a Python-integrated JAX-written rigorous Newton-Raphson algorithm for equilibrium separation, with applications to distillation sequencing for purifying multi-component mixtures. 
 
 ## Table of Contents
 
@@ -24,82 +20,42 @@ This project aims to provide an efficient and reliable method for distillation s
 ## Features
 
 - **Rigorous Newton-Raphson Algorithm**: Implemented in JAX for fast and reliable equilibrium separation.
-- **Reinforcement Learning Integration**: Uses the Jumanji library's RL framework for optimizing distillation sequences.
-- **Automatic Differentiation**: Supports automatic differentiation for efficient Jacobian calculation, allowing integration of non-ideal behavior.
-- **Scalability**: Capable of handling ideal hydrocarbon mixtures with up to ten components.
-- **Integration with Aspen Plus**: Utilizes the Aspen Plus thermodynamic database for easy extension to different mixtures.
+- **Automatic Differentiation**: Supports automatic differentiation for efficient Jacobian calculation.
+- **Scalability**: Provided with 10 hydrocarbon example components currently described with ideal behavior.
+- **Thermodynamics**: Utilizes the DIPPR thermodynamic system descriptions to match the thermodynamic database provided by Aspen Plus.
 
 ## Installation
 
-To run this project, you need to have Python installed along with some required libraries. Follow these steps to set up the environment:
+To run this project, the repository can be installed via;
 
-1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/NiklasSlager/equdist.git
-    cd equdist
+    pip install git+https://github.com/NiklasSlager/equdist.git
     ```
-
-2. **Create and Activate a Virtual Environment**:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use: venv\Scripts\activate
-    ```
-
-3. **Install Required Dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. **Install Jumanji Library**: Follow the instructions to install the Jumanji library from its official documentation.
 
 ## Usage
 
 1. **Run the Training Notebook**:
-    A Jupyter notebook named `training.ipynb` is provided to run the training sessions. Open the notebook and follow the instructions to start training the RL agent.
-    
-    ```bash
-    jupyter notebook training.ipynb
-    ```
+    A Jupyter notebook named `tutorial.ipynb` is provided to run the model. A link to Google Colab is provide for easy testing and use.
 
-2. **Configure Parameters**: Adjust the hyperparameters and environment settings as required in the `training.ipynb` file.
+2. **Distillation input Parameters**:
+   The input parameters to the distillation column are:
+   1. Number of stages
+   2. Feed location
+   3. Feed rate (kmol/hr)
+   4. Feed composition
+   5. Reflux ratio
+   6. Distillate rate
+   7. Operating pressure
 
-3. **Run the Algorithm**:
-    Execute the cells in the notebook to start the training process. The RL agent will optimize the distillation process based on the given settings.
+4. **Run the Algorithm**:
+    The plots visualize profiles including liquid composition, liquid and vapor flowrate, temperature, and liquid and vapor enthalpies.
 
 ## Project Structure
 
-- **`equdist/`**: Main directory containing the core code for the Newton-Raphson algorithm and RL integration.
+- **`equdist/`**: Main directory containing the core code for the Newton-Raphson algorithm.
 - **`notebooks/`**: Jupyter notebooks for training and evaluation.
-- **`data/`**: Directory for storing input data and results.
-- **`requirements.txt`**: List of Python packages required for the project.
 - **`README.md`**: Project documentation.
 
-## Examples
-
-### Example: Running a Basic Training Session
-
-```python
-from equdist import RLAgent, DistillationEnv
-
-# Initialize the environment and agent
-env = DistillationEnv()
-agent = RLAgent(env)
-
-# Run training
-agent.train(num_episodes=1000)
-```
-
-### Example: Running the Newton-Raphson Algorithm
-
-```python
-from equdist import NRAlgorithm
-
-# Initialize the algorithm with desired parameters
-nr_algo = NRAlgorithm(components=['A', 'B', 'C'])
-
-# Perform separation
-results = nr_algo.run()
-```
 
 ## Contributing
 
