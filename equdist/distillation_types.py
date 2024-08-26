@@ -8,9 +8,6 @@ import jax.numpy as jnp
 import chex
 
 
-
-
-
 class Tray(NamedTuple):
     l: chex.Array
     v: chex.Array
@@ -21,19 +18,6 @@ class Mesh(NamedTuple):
     H: jnp.ndarray
     M: jnp.ndarray
     E: jnp.ndarray
-
-
-class Derivatives(NamedTuple):
-    H: Tray
-    M: Tray
-    E: Tray
-
-
-class Thermo(NamedTuple):
-    psat_params: chex.Array
-    hvap_params: chex.Array
-    hform_params: chex.Array
-    cpvap_params: chex.Array
 
 
 class FUG_state(NamedTuple):
