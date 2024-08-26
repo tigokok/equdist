@@ -1,8 +1,8 @@
 import jax.numpy as jnp
 import jax
 from jax import vmap, lax, jit
-from jumanji.environments.distillation.NR_model_test.distillation_types import State, Tray, Thermo
-from jumanji.environments.distillation.NR_model_test import functions, initial_composition, matrix_transforms, jacobian, \
+from equdist.distillation_types import State, Tray, Thermo
+from equdist import functions, initial_composition, matrix_transforms, jacobian, \
     thermodynamics, costing, purity_constraint
 import os
 
