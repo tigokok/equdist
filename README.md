@@ -52,11 +52,11 @@ To run this project, the repository can be installed via;
 ## Project Structure
 The algorithm entails two steps for better convergence performance: In the first step, the equilibrium separation is solved assuming equimolar overflow. The heat equation is replaced with a total flow constraint to solve the Newton-Raphson procedure assuming equimolar overflow. The full set of MESH equations is solved in the second step.
 - **`equdist/`**: Main directory containing the core code for the Newton-Raphson algorithm.
-  - **`equimolar/`**: Module for the equimolar overflow procedure.
-  - **`model/`**: Module for the full NR procedure.
-  - **`functions/`** auxilary functions used within the algorithm.
-  - **`thermodynamics/`** Description of the thermodynamic model using the DIPPR equations
-  - **`costing/`** Module for a basic total annualized cost estimation procedure based on the Marshall & Swift correlations
+  - **`equimolar`**: Module for the equimolar overflow procedure.
+  - **`model`**: Module for the full NR procedure.
+  - **`functions`** auxilary functions used within the algorithm.
+  - **`thermodynamics`** Description of the thermodynamic model using the DIPPR equations
+  - **`costing`** Module for a basic total annualized cost estimation procedure based on the Marshall & Swift correlations
 - **`notebooks/`**: Jupyter notebooks for example usage.
 - **`README.md`**: Project documentation.
 
