@@ -2,9 +2,9 @@ import chex
 import jax.numpy as jnp
 import jax
 from jax import vmap, scipy
-from jumanji.environments.distillation.NR_model_test.distillation_types import State
-from jumanji.environments.distillation.NR_model_test import functions
-from jumanji.environments.distillation.NR_model_test import thermodynamics as thermo
+from equdist.distillation.NR_model_test.distillation_types import State
+from equdist.distillation.NR_model_test import functions
+from equdist.distillation.NR_model_test import thermodynamics as thermo
 
 
 def get_aj(state, j):
