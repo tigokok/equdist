@@ -1,8 +1,8 @@
 import jax.numpy as jnp
 import jax
 from jax import vmap
-from jumanji.environments.distillation.NR_model_test.distillation_types import FUG_state, State
-from jumanji.environments.distillation.NR_model_test import functions, thermodynamics, NR_model
+from equdist.distillation_types import FUG_state, State
+from equdist.NR_model_test import functions, thermodynamics, NR_model
 from jaxopt import Bisection
 
 
