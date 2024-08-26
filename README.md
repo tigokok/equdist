@@ -20,8 +20,8 @@ This project aims to provide an efficient and reliable method for distillation s
 
 - **Rigorous Newton-Raphson Algorithm**: Implemented in JAX for fast and reliable equilibrium separation.
 - **Automatic Differentiation**: Supports automatic differentiation for efficient Jacobian calculation.
-- **Scalability**: Provided with 10 hydrocarbon example components currently described with ideal behavior.
-- **Thermodynamics**: Utilizes the DIPPR thermodynamic system descriptions to match the thermodynamic database provided by Aspen Plus.
+- **Scalability**: Tested with up to ten hydrocarbon components exhibiting ideal behavior, with potential for expansion to more complex mixtures.
+- **Thermodynamics**: Leverages the DIPPR thermodynamic system and is compatible with the Aspen Plus thermodynamic database, making it adaptable to various chemical processes.
 
 ## Installation
 
@@ -50,9 +50,14 @@ To run this project, the repository can be installed via;
     The plots visualize profiles including liquid composition, liquid and vapor flowrate, temperature, and liquid and vapor enthalpies.
 
 ## Project Structure
-
+The algorithm entails two steps for better convergence performance: In the first step, the equilibrium separation is solved assuming equimolar overflow. The heat equation is replaced with a total flow constraint to solve the Newton-Raphson procedure assuming equimolar overflow. The full set of MESH equations is solved in the second step.
 - **`equdist/`**: Main directory containing the core code for the Newton-Raphson algorithm.
-- **`notebooks/`**: Jupyter notebooks for training and evaluation.
+  - **`equimolar/`**: Module for the equimolar overflow procedure.
+  - **`model/`**: Module for the full NR procedure.
+  - **`functions/`** auxilary functions used within the algorithm.
+  - **`thermodynamics/`** Description of the thermodynamic model using the DIPPR equations
+  - **`costing/`** Module for a basic total annualized cost estimation procedure based on the Marshall & Swift correlations
+- **`notebooks/`**: Jupyter notebooks for example usage.
 - **`README.md`**: Project documentation.
 
 
@@ -64,6 +69,5 @@ Contributions are welcome! If you have suggestions for improvements or new featu
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
----
 
-Feel free to adjust this README to better fit the specific needs and details of your project. Let me know if there is anything specific you'd like to add or modify!
+
