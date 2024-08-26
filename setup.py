@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="JAX distillation",
+    name="equdist",
     version="0.0.1",
     author="Niklas Slager",
     author_email="niklasslager@outlook.com",
@@ -12,11 +12,8 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/NiklasSlager/EquDist",
-    packages=['NR_model_test'],
-    package_data={'NR_model_test': [
-        'Pure component parameters/Antoine.csv', 'Pure component parameters/Vapor_CP.csv',
-        'Pure component parameters/Heat_of_evaporization.csv', 'Pure component parameters/Heat_of_formation.csv', 
-    ]},
+    packages=['equdist'],
+    package_data={'eqdist': ]},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
