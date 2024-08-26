@@ -1,6 +1,6 @@
 import jax.numpy as jnp
 from jax import vmap
-from jumanji.environments.distillation.NR_model_test.distillation_types import Tray, Mesh, State
+from equdist.distillation_types import Tray, Mesh, State
 
 
 def trays_func(state: State):
