@@ -3,8 +3,8 @@ import jax
 from jaxopt import Bisection
 from jax import vmap, lax, jit
 from equdist.distillation_types import State, Tray, Thermo
-from equdist import functions, initial_composition, matrix_transforms, jacobian, \
-    thermodynamics, costing, purity_constraint, equimolar
+from equdist import functions, matrix_transforms, jacobian, \
+    thermodynamics, costing, equimolar
 import os
 
 # from NR_model_test.analytic_jacobian import jacobian as pure_jac
