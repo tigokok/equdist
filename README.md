@@ -27,9 +27,9 @@ This project aims to provide an efficient and reliable method for distillation s
 
 To run this project, the repository can be installed via;
 
-    ```bash
+    
     pip install git+https://github.com/NiklasSlager/equdist.git
-    ```
+    
 
 ## Usage
 
