@@ -1,41 +1,11 @@
 import jax.numpy as jnp
 from equdist.distillation_types import State
-#from equdist.distillation.NR_model_test.data_property import MW, DENSITY
-
-MW = jnp.array([44.09652,
-                     58.1234,
-                     58.1234,
-                     72.15028,
-                     70.1344,
-                     86.17716,
-                     100.20404,
-                ], dtype=float) # kg/kmol'
-'''
-                     100.20404,
-                     114.23092,
-                     114.23092
-                     ], dtype=float) # kg/kmol
-    '''
-DENSITY = jnp.array([582.16062595505,
-                     595.443221427136,
-                     603.035386342418,
-                     611.258995343012,
-                     718.953321022845,
-                     615.501010415606,
-                     639.116574979533,
-], dtype=float)
-'''
-                     
-                     614.978050422831,
-                     615.56023902613,
-                     613.127610604072
-                     ], dtype=float)
-'''
+from equdist.physical_data_sets import MW, DENSITY
 
 def diameter(state: State, l_s):
     r_gas = 8.314
-    mw_series = MW
-    rho_series = DENSITY
+    mw_series = MW[state.components]
+    rho_series = DENSITY[state.components]
     #mw_series = jnp.array([44.097, 58.12, 72.15])
     #rho_series = jnp.array([493.0, 625.0, 626.0])
     rho_v = jnp.where(jnp.sum(state.Y, axis=0) > 0, (state.pressure * 1e5 / (r_gas * state.temperature)*jnp.sum(state.Y*mw_series[:, None], axis=0))/1000, 0)
