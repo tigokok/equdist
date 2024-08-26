@@ -9,7 +9,6 @@ Welcome to the `equdist` repository! This project contains the code and resource
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
-- [Examples](#examples)
 - [Contributing](#contributing)
 - [License](#license)
 
