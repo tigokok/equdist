@@ -2,7 +2,7 @@ import jax.numpy as jnp
 import jax
 from jax import vmap
 from equdist.distillation_types import FUG_state, State
-from equdist import functions, thermodynamics, model
+from equdist import functions, thermodynamics
 from jaxopt import Bisection
 
 
