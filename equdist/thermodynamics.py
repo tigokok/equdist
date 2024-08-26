@@ -1,7 +1,7 @@
 import jax.numpy as jnp
 from jaxopt import Bisection
 from jax import vmap
-from equdist.distillation_types import State, Thermo
+from equdist.distillation_types import State
 import os
 #from equdist.physical_data_sets import psat_params, cpvap_params, hvap_params, hform_params
 #from jumanji.environments.distillation.NR_model_test.data_property import DHV, HFORM, CPIG, PSAT
