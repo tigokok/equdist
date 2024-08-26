@@ -1,7 +1,7 @@
 import jax.numpy as jnp
 import jax
 from jax import vmap, lax, jit
-from equdist.distillation_types import State, Tray, Thermo
+from equdist.distillation_types import State, Tray
 from equdist import functions, initial_composition, matrix_transforms, jacobian, \
     thermodynamics, costing, purity_constraint
 import os
