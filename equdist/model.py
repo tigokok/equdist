@@ -2,7 +2,7 @@ import jax.numpy as jnp
 import jax
 from jaxopt import Bisection
 from jax import vmap, lax, jit
-from equdist.distillation_types import State, Tray, Thermo
+from equdist.distillation_types import State, Tray
 from equdist import functions, matrix_transforms, jacobian, \
     thermodynamics, costing, equimolar
 import os
