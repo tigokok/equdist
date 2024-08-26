@@ -58,13 +58,7 @@ To run this project, the repository can be installed via;
 
 ## Contributing
 
-Contributions are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request. For major changes, please discuss them with the repository owners first.
-
-1. Fork the repository.
-2. Create a new branch for your feature: `git checkout -b feature-name`
-3. Commit your changes: `git commit -m 'Add new feature'`
-4. Push to the branch: `git push origin feature-name`
-5. Submit a pull request.
+Contributions are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request. For major changes, please discuss them with the repository owner first.
 
 ## License
 
