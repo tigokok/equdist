@@ -2,7 +2,7 @@ import chex
 import jax.numpy as jnp
 import jax
 from jax import vmap, scipy
-from equdist.distillation.NR_model_test.distillation_types import State
+from equdist.distillation_types import State
 from equdist import functions
 from equdist import thermodynamics as thermo
 
