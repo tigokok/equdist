@@ -3,9 +3,10 @@ from jaxopt import Bisection
 from jax import vmap
 from equdist.distillation_types import State
 import os
-#from equdist.physical_data_sets import psat_params, cpvap_params, hvap_params, hform_params
+from equdist.physical_data_sets import *
 #from jumanji.environments.distillation.NR_model_test.data_property import DHV, HFORM, CPIG, PSAT
 
+'''
 CPIG = jnp.array([[14.2051,	30.2403,	844.31,	20.5802,	2482.7,	298.15,	1500],
         [18.2464,	40.1309,	826.54,	24.5653,	2483.1,	298.15,	1500],
         [19.1445,	38.7934,	841.49,	25.258,	    2476.1,	298.15,	1500],
@@ -50,6 +51,7 @@ HFORM = jnp.array([-25.0024,
                    -53.1456,
                    -49.8591
                    ], dtype=float) * jnp.array(4.184, dtype=float)  #KCAL/mol
+'''
 
 def p_sat(temp, compound):
     #dir = os.path.join(os.getcwd(), 'Pure component parameters')
