@@ -1,8 +1,8 @@
 import jax.numpy as jnp
 from jax import jacfwd, vmap
 from equdist.distillation_types import Tray, Mesh, State
-from equdist.NR_model_test import thermodynamics as thermo
-from equdist.NR_model_test.matrix_transforms import single_tuple_to_matrix, trays_func
+from equdist import thermodynamics as thermo
+from equdist.matrix_transforms import single_tuple_to_matrix, trays_func
 
 
 def m_function(state, tray_low, tray, tray_high, i, j):
