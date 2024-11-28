@@ -19,7 +19,7 @@ setuptools.setup(
         "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
-    install_requires=["chex==0.1.86", "jax==0.4.28", "jaxlib==0.4.28", "jaxopt==0.8.3"]
+    python_requires='>=3.8',
+    install_requires=["chex>=0.1.86", "jax>=0.4.28", "jaxlib>=0.4.28", "jaxopt>=0.8.3"]
 )
 
