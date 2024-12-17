@@ -74,3 +74,6 @@ class State:
     NR_iterations: chex.Array
     EQU_iterations: chex.Array
     BP_iterations: chex.Array
+    damping: chex.Scalar
+    dx: chex.Array
+    profile: chex.Array
