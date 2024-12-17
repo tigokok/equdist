@@ -1,4 +1,5 @@
 import jax.numpy as jnp
+from equdist.purity_constraint import feedstage
 from jax import jacfwd, vmap
 from equdist.distillation_types import Tray, Mesh, State
 from equdist import thermodynamics as thermo
@@ -6,7 +7,9 @@ from equdist.matrix_transforms import single_tuple_to_matrix, trays_func
 
 
 def m_function(state, tray_low, tray, tray_high, i, j):
-    return tray.l[i] + tray.v[i] - tray_high.l[i] - tray_low.v[i] - state.F[j]*state.z[i]
+    m = tray.l[i] + tray.v[i] - tray_high.l[i] - tray_low.v[i] - state.F[j] * state.z[i]
+    m = jnp.where(j == state.Nstages - 1, tray.l[i] + tray.v[i] - tray_high.l[i], m)
+    return m
 
 
 def m_simple(state, tray, i, j):
@@ -19,7 +22,7 @@ def m_simple(state, tray, i, j):
 
 
 def e_function(state: State, tray_low, tray, tray_high, i, j):
-    return ((tray.l[i]/jnp.sum(tray.l) * thermo.k_eq(tray.T, state.components[i], state.pressure) - tray.v[i]/jnp.sum(tray.v))) #*jnp.where(state.z > 0, 1, 0)[i]
+    return jnp.nan_to_num((tray.l[i]/jnp.sum(tray.l) * thermo.k_eq(tray.T, state.components[i], state.pressure) - tray.v[i]/jnp.sum(tray.v))) #*jnp.where(state.z > 0, 1, 0)[i]
 
 
 def e_function_simple(state: State, tray_low, tray, tray_high, i, j):
@@ -32,13 +35,13 @@ def h_function(state: State, tray_low, tray, tray_high, j):
     #-(jnp.sum(tray.v) - jnp.sum(tray.l) / state.RR)
     cond_spec = jnp.where(state.light_key>0,
                           (tray.v[state.light_key]-state.light_spec*jnp.sum(state.F)*state.z[state.light_key]),
-                          -(jnp.sum(tray.v) - jnp.sum(tray.l) / state.RR)
+                          (state.RR - jnp.nan_to_num(jnp.sum(tray.l)/jnp.sum(tray.v)))
                           )
     reb_spec = jnp.where(state.heavy_key>0,
                          (tray.l[state.heavy_key]-state.heavy_spec * jnp.sum(state.F)*state.z[state.heavy_key]),
-                         -(jnp.sum(tray.l) - (jnp.sum(state.F) - state.distillate))
+                         jnp.sum(tray.l) - (jnp.sum(state.F)-state.distillate)
                          )
-
+    #reb_spec = tray.T - state.temperature_bounds[1]
     result = jnp.where(j == 0, cond_spec, (
         jnp.where(j == state.Nstages - 1, reb_spec, (
                 jnp.sum(tray.l * thermo.liquid_enthalpy(tray.T, state.components)) + jnp.sum(
@@ -65,14 +68,22 @@ def g_vector_function(state: State, tray_low, tray, tray_high, j):
                       jnp.sum(tray.v)/(state.RR+1) - jnp.sum(tray.l)/state.RR,
                       jnp.sum(tray.v)/(state.RR+1) - (jnp.sum(tray.l) - jnp.sum(state.F))/state.RR)
     '''
-    eqmol = jnp.sum(tray.l)-state.L[j]
+    #eqmol = jnp.sum(tray.l)-state.L[j]
+    feed_stage = jnp.max(jnp.where(state.F>0, jnp.arange(len(state.F)), 0))+1
+    #eqmol = jnp.where(j < state.Nstages, jnp.sum(tray.l) - state.L[j], 0)
+    #eqmol = jnp.where(j < state.Nstages, jnp.sum(tray.v) - state.L[j-1] - state.distillate, 0)
+    eqmol = jnp.where(j < feed_stage-1, jnp.sum(tray.v)-state.distillate-jnp.sum(tray.l), jnp.sum(tray.v)-state.distillate-jnp.sum(tray.l)+jnp.sum(state.F*state.z[:, None]))*jnp.where(j>state.Nstages-1, 0, 1)
     m = jnp.asarray(jnp.where(j < state.Nstages, vmap(m_function, in_axes=(None, None, None, None, 0, None))(state, tray_low, tray, tray_high, jnp.arange(len(state.components)), j), 0))
     h = eqmol
+    h = jnp.where(j==0, state.RR - jnp.nan_to_num(sum(tray.l)/jnp.sum(tray.v)), h)
+    h = jnp.where(j == state.Nstages-1, jnp.sum(tray.l)-(jnp.sum(state.F)-jnp.sum(state.distillate)), h)
     e = jnp.asarray(jnp.where(j < state.Nstages, vmap(e_function, in_axes=(None, None, None, None, 0, None))(state, tray_low, tray, tray_high, jnp.arange(len(state.components)), j), 0))
+    #e = jnp.where(j == state.Nstages - 1, jnp.sum(tray.l)-(jnp.sum(state.F)-state.distillate), e)
+    e_0 = jnp.asarray(jnp.where(j < state.Nstages, vmap(e_function, in_axes=(None, None, None, None, 0, None))(state, tray_low, tray, tray_high, jnp.arange(len(state.components)), j)*0, 0))
 
-    return Mesh(H=h/(5*jnp.sum(state.F)),
+    return Mesh(H=h,
                 M=m,
-                E=e,
+                E=e
                 )
 
 def f_jac_a(state: State, tray_low, tray, tray_high, j):
@@ -149,6 +160,7 @@ def jacobian_func(state: State, tray_low: Tray, tray_high: Tray, tray: Tray):
     c = vmap(f_jac_c, in_axes=(None, None, None, None, 0))(state, tray_low, tray,
                                                            tray_high, jnp.arange(len(tray.T)))
     return a[1:, :, :], b, c[:-1, :, :]
+
 
 
 def g_jacobian_func(state: State, tray_low: Tray, tray_high: Tray, tray: Tray):
