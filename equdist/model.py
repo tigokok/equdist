@@ -12,9 +12,8 @@ import os
 import os
 
 
-def initialize():
+def initialize(c_max = 10):
     n_max = 90
-    c_max = 10
     dir = os.path.join(os.getcwd(), 'Pure component parameters')
     # psat_params, cpvap_params, hvap_params, hform_params = thermodynamics.retrieve_params(dir)
     return State(
