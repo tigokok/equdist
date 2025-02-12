@@ -1,8 +1,8 @@
 from matplotlib import pyplot as plt
 import jax.numpy as jnp
 
-def plot_function(stages, L, V, temperature, H_liq, H_vap, xnorm, y, components):
-    fig, axs = plt.subplots(2, 3, figsize=(12, 4))
+def plot_function(stages, L, V, temperature, H_liq, H_vap, xnorm, y, components, tight_layout = True, figsize = (12, 6)):
+    fig, axs = plt.subplots(2, 3, figsize=figsize, layout = 'tight' if tight_layout else None)
 
     # Plot data on each subplot
     axs[0, 0].plot(stages, L)
@@ -54,3 +54,5 @@ def plot_function(stages, L, V, temperature, H_liq, H_vap, xnorm, y, components)
     axs[1, 2].grid(True)
     axs[1, 2].legend()
     axs[1, 2].set_xticks(jnp.arange(1, len(stages)))
+
+    plt.show()
