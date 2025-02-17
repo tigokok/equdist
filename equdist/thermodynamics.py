@@ -3,7 +3,9 @@ from jaxopt import Bisection
 from jax import vmap
 from equdist.distillation_types import State
 import os
-from equdist.physical_data_sets import *
+
+from equdist.physical_data_sets import load_component_list
+CPIG, DHV, PSAT, HFORM, MW, DENSITY = load_component_list()
 
 def p_sat(temp, compound):
     #dir = os.path.join(os.getcwd(), 'Pure component parameters')

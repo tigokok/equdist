@@ -1,6 +1,8 @@
 import jax.numpy as jnp
 from equdist.distillation_types import State
-from equdist.physical_data_sets import MW, DENSITY
+
+from equdist.physical_data_sets import load_component_list
+CPIG, DHV, PSAT, HFORM, MW, DENSITY = load_component_list()
 
 def diameter(state: State, l_s):
     r_gas = 8.314

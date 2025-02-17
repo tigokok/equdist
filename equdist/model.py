@@ -10,10 +10,12 @@ import os
 # from NR_model_test.analytic_jacobian import jacobian as pure_jac
 # from NR_model_test import analytic_jacobian
 import os
+from equdist.physical_data_sets import load_component_list
 
-
-def initialize(c_max = 10):
+def initialize(c_max):
     n_max = 90
+    c_max = c_max
+
     dir = os.path.join(os.getcwd(), 'Pure component parameters')
     # psat_params, cpvap_params, hvap_params, hform_params = thermodynamics.retrieve_params(dir)
     return State(
