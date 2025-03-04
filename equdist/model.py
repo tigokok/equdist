@@ -12,8 +12,7 @@ import os
 import os
 from equdist.physical_data_sets import load_component_list
 
-def initialize(c_max):
-    n_max = 90
+def initialize(c_max, n_max = 90):
     c_max = c_max
 
     dir = os.path.join(os.getcwd(), 'Pure component parameters')
